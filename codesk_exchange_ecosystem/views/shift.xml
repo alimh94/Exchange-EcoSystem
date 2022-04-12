@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem name="Exchange Ecosystem" id="root_ecosystem_menu" groups="account.group_account_readonly,account.group_account_invoice"
+                  web_icon="account,static/description/icon.png" sequence="90"/>
+        <menuitem name="Shifts" id="shift" parent="root_ecosystem_menu" sequence="1"/>
+        <menuitem name="Shift" id="shift_menu" parent="shift" action="shift_action" sequence="1"/>
+
+        <record id="shift_form_view" model="ir.ui.view">
+            <field name="name">Shift Form View</field>
+            <field name="model">shift</field>
+            <field name="arch" type="xml">
+                <form string="Shift">
+                    <header>
+                        <button name="action_confirm_opening" string="Confirm Opening" class="oe_highlight"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'open')]}"/>
+
+                        <button name="action_close" string="Close" class="oe_highlight"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'confirmed_open')]}"/>
+
+                        <button name="action_confirm_closing" string="Confirm Closing" class="oe_highlight"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'closed')]}"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <span class="o_form_label">
+                                Shift
+                            </span>
+                            <h1 attrs="{'invisible': [('state', '!=', 'open')]}">
+                                <span>Open</span>
+                            </h1>
+
+                            <!-- Number -->
+                            <h1 class="mt0">
+                                <field name="name" placeholder="Daily Shift"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <div class="o_td_label">
+                                    <label for="user_id" string="User" style="font-weight:bold;"/>
+                                </div>
+                                <field name="user_id" widget="res_partner_many2one" nolabel="1"/>
+<!--                                <label for="branch_id" string="Branch"/>-->
+<!--                                <field name="branch_id" nolabel="1"/>-->
+
+                            </group>
+                            <group id="header_right_group">
+                                <!-- Invoice date (only invoices / receipts) -->
+                                <div class="o_td_label">
+                                    <label for="create_date" string="Opening Date" style="font-weight:bold;"/>
+                                </div>
+                                <field name="create_date" nolabel="1" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page id="shift_lines_tab" string="Opening Balance">
+                                <field name="shift_line_ids" widget="section_and_note_one2many" mode="tree">
+                                    <tree editable="bottom" string="Opening Balance" default_order="currency_id">
+                                        <control>
+                                            <create name="add_line_control" string="Add a line"/>
+                                        </control>
+
+                                        <!-- Displayed fields -->
+                                        <field name="currency_id"/>
+                                        <field name="opening_balance" />
+                                        <field name="closing_balance" attrs="{'column_invisible': [('parent.state', 'not in', ('confirmed_open', 'closed', 'confirmed_closed'))]}"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="currency_id"/>
+                                                <field name="opening_balance" />
+                                                <field name="closing_balance" attrs="{'column_invisible': [('parent.state', 'not in', ('confirmed_open', 'closed', 'confirmed_closed'))]}"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!-- Chatter -->
+<!--                    <div class="oe_chatter">-->
+<!--                        <field name="message_follower_ids" groups="base.group_user"/>-->
+<!--                        <field name="activity_ids"/>-->
+<!--                        <field name="message_ids"/>-->
+<!--                    </div>-->
+                </form>
+            </field>
+        </record>
+
+        <record id="shift_tree_view" model="ir.ui.view">
+            <field name="name">Shift Tree View</field>
+            <field name="model">shift</field>
+            <field name="arch" type="xml">
+                <tree string="Shifts">
+                    <field name="name" />
+                    <field name="create_date" />
+                    <field name="closing_date" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="shift_action" model="ir.actions.act_window">
+            <field name="name">Shift</field>
+            <field name="res_model">shift</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="shift_tree_view"/>
+        </record>
+
+    </data>
+</odoo>

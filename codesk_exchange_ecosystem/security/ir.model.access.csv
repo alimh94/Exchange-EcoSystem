@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_kyc,res.kyc,model_res_kyc,,1,1,1,1
+access_shift,shift,model_shift,,1,1,1,1
+access_shift_line,shift.line,model_shift_line,,1,1,1,1
+access_shift_transaction,shift.transaction,model_shift_transaction,,1,1,1,1
