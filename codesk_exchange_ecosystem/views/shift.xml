@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <menuitem name="Exchange Ecosystem" id="root_ecosystem_menu" groups="account.group_account_readonly,account.group_account_invoice"
-                  web_icon="account,static/description/icon.png" sequence="90"/>
-        <menuitem name="Shifts" id="shift" parent="root_ecosystem_menu" sequence="1"/>
-        <menuitem name="Shift" id="shift_menu" parent="shift" action="shift_action" sequence="1"/>
+        <record id="shift_action" model="ir.actions.act_window">
+            <field name="name">Shift</field>
+            <field name="res_model">shift</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="shift_tree_view"/>
+        </record>
 
         <record id="shift_form_view" model="ir.ui.view">
             <field name="name">Shift Form View</field>
@@ -107,12 +109,10 @@
             </field>
         </record>
 
-        <record id="shift_action" model="ir.actions.act_window">
-            <field name="name">Shift</field>
-            <field name="res_model">shift</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="shift_tree_view"/>
-        </record>
+        <menuitem name="Exchange Ecosystem" id="root_ecosystem_menu" groups="account.group_account_readonly,account.group_account_invoice"
+                  web_icon="account,static/description/icon.png" sequence="90"/>
+        <menuitem name="Shifts" id="shift" parent="root_ecosystem_menu" sequence="1"/>
+        <menuitem name="Shift" id="shift_menu" parent="shift" action="shift_action" sequence="1"/>
 
     </data>
 </odoo>
