@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="shift_tree_view" model="ir.ui.view">
+            <field name="name">Shift Tree View</field>
+            <field name="model">shift</field>
+            <field name="arch" type="xml">
+                <tree string="Shifts">
+                    <field name="name" />
+                    <field name="create_date" />
+                    <field name="closing_date" />
+                </tree>
+            </field>
+        </record>
+
         <record id="shift_action" model="ir.actions.act_window">
             <field name="name">Shift</field>
             <field name="res_model">shift</field>
@@ -97,17 +109,6 @@
             </field>
         </record>
 
-        <record id="shift_tree_view" model="ir.ui.view">
-            <field name="name">Shift Tree View</field>
-            <field name="model">shift</field>
-            <field name="arch" type="xml">
-                <tree string="Shifts">
-                    <field name="name" />
-                    <field name="create_date" />
-                    <field name="closing_date" />
-                </tree>
-            </field>
-        </record>
 
         <menuitem name="Exchange Ecosystem" id="root_ecosystem_menu" groups="account.group_account_readonly,account.group_account_invoice"
                   web_icon="account,static/description/icon.png" sequence="90"/>
